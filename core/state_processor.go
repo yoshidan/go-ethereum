@@ -18,6 +18,7 @@ package core
 
 import (
 	"fmt"
+	"github.com/ethereum/go-ethereum/log"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -116,6 +117,7 @@ func applyTransaction(msg types.Message, config *params.ChainConfig, author *com
 	// by the tx.
 	receipt := &types.Receipt{Type: tx.Type(), PostState: root, CumulativeGasUsed: *usedGas}
 	if result.Failed() {
+		log.Debug("Transaction failed", "err", result.Unwrap())
 		receipt.Status = types.ReceiptStatusFailed
 	} else {
 		receipt.Status = types.ReceiptStatusSuccessful
